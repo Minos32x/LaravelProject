@@ -4,6 +4,17 @@
 
 <h1 class="text-center">Post Edit</h1>
 
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <div class="alert-danger">{{ $error }}</div>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="container-fluid">
 <form method="POST" action="/posts/update/{{$post->id}}">
 {{csrf_field()}}

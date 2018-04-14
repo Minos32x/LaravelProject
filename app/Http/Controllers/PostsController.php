@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use App\User;
-// use Illuminate\Support\Facades\Request;
-// use Illuminate\Support\Facades\Request;
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\CreatePostRequest;
+
 
 class PostsController extends Controller
 {
     public function index()
     {
         // $posts = Post::all();
-        $posts=Post::Paginate(2);
+        $posts = Post::Paginate(4);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -25,7 +26,7 @@ class PostsController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
         Post::create([
             'title' => $request->title,
@@ -46,23 +47,26 @@ class PostsController extends Controller
     }
 
 
-    public function update(Request $req, $id)
+    public function update(StorePostRequest $req, $id)
     {
-        Post::find($id)->update([
+        
+            Post::find($id)->update([
 
-            'title' => $req->title,
-            'description' => $req->description,
-            'user_id' => $req->user_id
+                'title' => $req->title,
+                'description' => $req->description,
+                'user_id' => $req->user_id
 
-        ]);
-        return redirect('/posts');
+            ]);
+            return redirect('/posts');
+       
+
 
     }
 
     public function destroy($id)
     {
-        // Post::destroy($id);
-        Post::find($id)->delete();
+        Post::destroy($id);
+        // Post::find($id)->delete();
         return redirect('/posts');
 
     }
@@ -71,10 +75,6 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
-        // $newDateFormat3 = \Carbon\Carbon::createFromFormat('d/m/Y', $post->created_at);
-       
-
-       
         return view('posts.show', ['post' => $post]);
     }
 
