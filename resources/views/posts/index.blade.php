@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.app')
 
 @section('content')
 
@@ -15,6 +15,7 @@
     <th>Title</th>
     <th>Posted By</th>
     <th>Created At</th>
+    <th>Slug</th>
     <th>Action</th>
     
 </tr>
@@ -26,12 +27,22 @@
     <td>{{$post->title}}</td>
     <td>{{$post->user->name}}</td>
     <td>{{$post->created_at->format('Y-m-d')}}</td>
-    <td><a href="posts/show/{{$post->id}}"><button class="btn btn-info">View</button></a>
+    <td>{{$post->slug}}</td>
+    <td><a href="posts/show/{{$post->id}}"><button class="btn btn-info">View</button></a></td>
+    <td>
     <a href="posts/edit/{{$post->id}}"><button class="btn btn-warning">Edit</button></a>
-    <a href="posts/destroy/{{$post->id}}"><button class="btn btn-danger">Delete</button></a>
-    <form method="delete">
+    </td>
 
-    </form>
+
+   
+<td>
+<form action="{{ url('posts/destroy', ['id' => $post->id]) }}" method="post">
+    <input type="hidden" name="_method" value="delete" />
+    {{ csrf_field()}}
+    {{ method_field('DELETE') }}
+    <button onclick="return confirm('Are You Sure?')" type="submit"class="btn btn-danger">Delete</button>
+</form>
+
     
     </td>
 

@@ -14,7 +14,7 @@ class PostsController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::Paginate(4);
+        $posts = Post::Paginate(3);
         return view('posts.index', ['posts' => $posts]);
     }
 
@@ -28,11 +28,12 @@ class PostsController extends Controller
 
     public function store(CreatePostRequest $request)
     {
-        Post::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'user_id' => $request->user_id
-        ]);
+        // Post::create([
+        //     'title' => $request->title,
+        //     'description' => $request->description,
+        //     'user_id' => $request->user_id
+        // ]);
+        Post::create($request->only('title','description','user_id'));
 
         return redirect('/posts');
 
@@ -47,10 +48,10 @@ class PostsController extends Controller
     }
 
 
-    public function update(StorePostRequest $req, $id)
+    public function update(StorePostRequest $req, Post $post )
     {
         
-            Post::find($id)->update([
+            $post->update([
 
                 'title' => $req->title,
                 'description' => $req->description,

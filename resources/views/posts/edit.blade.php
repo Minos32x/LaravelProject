@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.app')
 
 @section('content')
 
@@ -18,6 +18,7 @@
 <div class="container-fluid">
 <form method="POST" action="/posts/update/{{$post->id}}">
 {{csrf_field()}}
+{{ method_field('PUT') }}
   <div class="form-group">
     <label for="exampleInputTitle">Title</label>
     <input type="text" class="form-control" id="exampleInputTitle"  name="title" value="{{$post->title}}">
@@ -32,7 +33,7 @@
     Author
   <select class="form-control form-control-lg" name="user_id" value="{{$post->user_id}}">
       @foreach($users as $user)
-  <option value="{{$user->id}}">{{$user->name}}</option>
+  <option {{$post->user->id === $user->id ? 'selected' : ''}} value="{{$user->id}}">{{$user->name}}</option>
 
   @endforeach
 </select>
@@ -41,7 +42,5 @@
 </form>
 
 </div>
-
-
 
 @endsection
