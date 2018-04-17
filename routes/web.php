@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\Storage;
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
-    // return("hellloooo");
-});
+Route::get('/', function () { return view('welcome'); });
 Route::middleware('auth')->group(function () {
 
 
@@ -25,19 +22,18 @@ Route::middleware('auth')->group(function () {
     Route::post('posts', 'PostsController@store')->name('posts.store');
 
     Route::get('posts/show/{id}', 'PostsController@show')->name('posts.show');
-    // Route::name('admin.')->group(function () {
+
     Route::get('posts/edit/{id}', 'PostsController@edit')->name('posts.edit');
     Route::put('posts/update/{post}', 'PostsController@update')->name('posts.update');
-    // })->name('posts');
+
     Route::delete('posts/destroy/{id}', 'PostsController@destroy')->name('posts.destroy');
 });
 
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
-Route::get('loggedGitHub',function(){
-    return view('welcome');
-});
+
+Route::get('login/{provider}', 'Auth\SocialAccountController@redirectToProvider');
+Route::get('login/{provider}/callback', 'Auth\SocialAccountController@handleProviderCallback');
+
 
 Auth::routes();
 

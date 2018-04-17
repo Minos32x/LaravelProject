@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommentsTable extends Migration
+class CreateLinkedSocialAccountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('linked_social_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('body');
-            $table->Integer('commentable_id');        // id of the model that will be used
-            $table->String('commentable_type');        // comment to be specified even for post model or any other model    
+            $table->bigInteger('user_id');
+            $table->string('provider_name')->nullable();
+            $table->string('provider_id')->unique()->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('linked_social_accounts');
     }
 }
