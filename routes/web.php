@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,18 +25,19 @@ Route::middleware('auth')->group(function () {
     Route::post('posts', 'PostsController@store')->name('posts.store');
 
     Route::get('posts/show/{id}', 'PostsController@show')->name('posts.show');
-    Route::name('admin.')->group(function () {
-        Route::get('posts/edit/{id}', 'PostsController@edit')->name('posts.edit');
-        Route::put('posts/update/{post}', 'PostsController@update')->name('posts.update');
-    });
+    // Route::name('admin.')->group(function () {
+    Route::get('posts/edit/{id}', 'PostsController@edit')->name('posts.edit');
+    Route::put('posts/update/{post}', 'PostsController@update')->name('posts.update');
+    // })->name('posts');
     Route::delete('posts/destroy/{id}', 'PostsController@destroy')->name('posts.destroy');
 });
 
+Route::get('login/github', 'Auth\LoginController@redirectToProvider');
+Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
 
-
-
-
-
+Route::get('loggedGitHub',function(){
+    return view('welcome');
+});
 
 Auth::routes();
 

@@ -29,6 +29,21 @@
     
     <textarea class="form-control" id="exampleInputDesc" name="description" >{{$post->description}}</textarea>
   </div>
+
+
+ <div class="form-group">
+    <label for="exampleInputTag">Tag</label>
+    <input type="text" class="form-control" id="exampleInputTag"  name="tag">
+  
+  </div>
+
+<div class="form-group">
+    <label for="exampleInputComment">Comment</label>
+    
+    <textarea class="form-control" id="exampleInputComment" name="comment"></textarea>
+  </div>
+
+
   <div class="form-group">
     Author
   <select class="form-control form-control-lg" name="user_id" value="{{$post->user_id}}">

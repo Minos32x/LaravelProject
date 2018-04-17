@@ -56,11 +56,6 @@
 </tbody>
     </table>
 
-@foreach($posts->links() as $link)
-
-<a href="{{$link}}"><button> Page:{{$link()}} </button></a>
-@endforeach
-
-<div class="pagination">Page {{$posts->links()}}</div>
+<div class="pagination"> {{$posts->links()}}</div>
 
 @endsection

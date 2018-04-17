@@ -33,8 +33,21 @@ class StorePostRequest extends FormRequest
                 'required', 'min:3', Rule::unique('posts')->ignore($post->title, 'title')
             ],
             'description' => 'required|min:10',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'image' => 'image|mimes:png,jpg'
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Post Title Should Be Filled',
+            'title.min' => 'Post Title Should Be At Least 3 Char',
+            'description.required' => 'Post Description Should Be Filled',
+            'description.min' => 'Post Title Should Be At Least 10 Char'
+
+        ];
+
     }
 
 }
