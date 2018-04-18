@@ -9,8 +9,6 @@ use App\User;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\CreatePostRequest;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManager;
-use Faker\Provider\Image;
 use App\Comment;
 
 
@@ -31,24 +29,19 @@ class PostsController extends Controller
     public function store(CreatePostRequest $request)
     {
         $data = $request->all();
-
         $getimageName = time() . '.' . $request->image->getClientOriginalName();
+        Storage::putFileAs('public/uploads', $request->file('image'), $getimageName);
 
-        $path = Storage::putFileAs('public/uploads', $request->file('image'), $getimageName);
-
-//      $path = $request->file('image')->store('public');
+//        $request->file('image')->store('public/uploads');
 
         $data['image'] = $getimageName;
 
         $post = Post::create($data);
         $post->attachTags([$request->tag]);
 
-
-
         return redirect('/posts');
 
     }
-
 
     public function edit($id)
     {
@@ -89,16 +82,15 @@ class PostsController extends Controller
 
     public function comment(CreateCommentRequest $req, $id)
     {
-//        $username=Post::find($id)->user->name;
-//        dd($username);
+        $username = Post::find($id)->user->name;
         Comment::create([
             'commentable_id' => $id,
             'commentable_type' => 'Post',
             'body' => $req->comment,
+            'user' => $username,
         ]);
 
-        return redirect('/posts/show/'.$id);
+        return redirect('/posts/show/' . $id);
     }
-
 
 }

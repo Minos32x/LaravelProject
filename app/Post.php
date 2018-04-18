@@ -8,10 +8,8 @@ use Spatie\Tags\HasTags;
 
 class Post extends Model
 {
-    use \Spatie\Tags\HasTags;
-    use Sluggable;
+    use \Spatie\Tags\HasTags , Sluggable;
 
-    use HasTags;
     protected $fillable = ['title', 'description', 'user_id', 'image'];
 
     /**

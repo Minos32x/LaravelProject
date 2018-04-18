@@ -11,7 +11,7 @@ Relation::morphMap([
 
 class Comment extends Model
 {
-    protected $fillable=['commentable_id','commentable_type','body'];
+    protected $fillable=['commentable_id','commentable_type','body','user'];
     public function commentable()
     { // func name should be same as commentable_id & commentable_type in mirgation file
         return $this->morphTo();

@@ -34,14 +34,7 @@
                 <input type="text" class="form-control" id="exampleInputTag" name="tag">
 
             </div>
-
-            <div class="form-group">
-                <label for="exampleInputComment">Comment</label>
-
-                <textarea class="form-control" id="exampleInputComment" name="comment"></textarea>
-            </div>
-
-
+            
             <div class="form-group">
                 Author
                 <select class="form-control form-control-lg" name="user_id">
@@ -53,17 +46,15 @@
             </div>
             <div class="form-group">
 
-            <!-- <form action="{{ URL::to('posts/create') }}" method="post" enctype="multipart/form-data"> -->
+
                 <label for="exampleInputUpload">Select image to upload:</label>
                 <input type="file" name="image" id="file exampleInputUpload">
                 <div class="text-center"><input class="btn btn-success " type="submit" value="Submit" name="submit">
                 </div>
                 <input type="hidden" value="{{ csrf_token() }}" name="_token">
-                <!-- </form> -->
+
             </div>
 
-
-            <!-- <div class="text-center"> <button type="submit" class="btn btn-primary">Submit</button></div> -->
         </form>
 
     </div>
