@@ -34,8 +34,7 @@ class CreatePostRequest extends FormRequest
             'title' => 'required|unique:posts|min:3',
             'description' => 'required|min:10',
             'user_id' => 'exists:users,id',
-            'image' => 'image|mimes:png,jpg',
-            'comment' => 'required|min:3',
+            'image' => 'image|mimes:png,jpg,jpeg',
 
         ];
     }
@@ -52,8 +51,7 @@ class CreatePostRequest extends FormRequest
             'user_id.exists' => "User Id isn't Valid",
             'image.image' => "Image Type Isn't Compitable",
 
-            'comment.required' => 'Post Comment Should Be Filled',
-            'comment.min' => 'Post Comment Should Be At Least 3 Char',
+
 
 
         ];

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCommentRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\CreatePostRequest;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Faker\Provider\Image;
 use App\Comment;
@@ -28,27 +30,20 @@ class PostsController extends Controller
 
     public function store(CreatePostRequest $request)
     {
-//        $tags=explode(',',$request->tag);
-
         $data = $request->all();
-//        dd($data);
-        $data['image'] = $request->file('image')->store('public');
+
+        $getimageName = time() . '.' . $request->image->getClientOriginalName();
+
+        $path = Storage::putFileAs('public/uploads', $request->file('image'), $getimageName);
+
+//      $path = $request->file('image')->store('public');
+
+        $data['image'] = $getimageName;
+
         $post = Post::create($data);
         $post->attachTags([$request->tag]);
-//        Post::create([
-//            'title' => $request->title,
-//            'description' => $request->description,
-//            'user_id' => $request->user_id,
-//            'tags' => $tags,
-//            'image' => $request->file('image')->store('public')
-//        ]);
 
 
-        // $getimageName = time().'.'.$request->uplode_image_file->getClientOriginalExtension();
-        // $request->uplode_image_file->move(public_path('images'), $getimageName);
-
-
-//        Post::create($request->only('title','description','user_id','comment','tag','image'));
 
         return redirect('/posts');
 
@@ -72,16 +67,7 @@ class PostsController extends Controller
             'description' => $req->description,
             'user_id' => $req->user_id,
 
-
         ]);
-        $comment = Comment::create([
-
-            'commentable_id' => $req->id,
-            'commentable_type' => get_class($post),
-            'body' => $req->comment,
-        ]);
-
-        Post::comments()->save($comment);
 
         return redirect('/posts');
 
@@ -99,6 +85,19 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         return view('posts.show', ['post' => $post]);
+    }
+
+    public function comment(CreateCommentRequest $req, $id)
+    {
+//        $username=Post::find($id)->user->name;
+//        dd($username);
+        Comment::create([
+            'commentable_id' => $id,
+            'commentable_type' => 'Post',
+            'body' => $req->comment,
+        ]);
+
+        return redirect('/posts/show/'.$id);
     }
 
 

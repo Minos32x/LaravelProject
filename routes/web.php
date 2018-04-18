@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
  */
 
 Route::get('/', function () { return view('welcome'); });
+
 Route::middleware('auth')->group(function () {
 
 
@@ -27,7 +28,10 @@ Route::middleware('auth')->group(function () {
     Route::put('posts/update/{post}', 'PostsController@update')->name('posts.update');
 
     Route::delete('posts/destroy/{id}', 'PostsController@destroy')->name('posts.destroy');
+
+    Route::post('posts/comment/{id}','PostsController@comment')->name('posts.comment');
 });
+
 
 
 
